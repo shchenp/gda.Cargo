@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
-    private bool _isDeliveryStart;
     private Vector3[] _path;
 
     private void OnEnable()
