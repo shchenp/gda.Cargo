@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Line : MonoBehaviour
 {
    [SerializeField] private LineRenderer _renderer;
+   [SerializeField] private UnityEvent<Vector3[]> _onStopDraw;
 
    private Camera _camera;
-   private float _depth = 13;
+   private float _depth = 12.88f;
 
    private void Awake()
    {
@@ -24,8 +26,16 @@ public class Line : MonoBehaviour
 
       if (Input.GetMouseButtonUp(0))
       {
+         _onStopDraw.Invoke(GetPath());
          Destroy(this);
       }
+   }
+
+   private Vector3[] GetPath()
+   {
+      var positions = new Vector3[_renderer.positionCount];
+      _renderer.GetPositions(positions);
+      return positions;
    }
 
    private void SetNewPoint()
